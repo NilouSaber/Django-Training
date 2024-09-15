@@ -9,3 +9,8 @@ class contact(models.Model):
     message = models.TextField()
     createdDate = models.DateTimeField(auto_now_add=True)
     updateTime = models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ("createdDate", )
+    def __str__(self):
+        return self.subject
+    
