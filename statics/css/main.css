@@ -4494,3 +4494,10 @@ body.mobile-nav-active #mobile-nav-toggle {
 .footer-text a, .footer-text i {
   color: #f8b600;
 }
+
+
+.custom-size {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
