@@ -25,15 +25,14 @@
 										<div class="single-post row">
 											<div class="col-lg-12">
 												<div class="feature-img">
-													<img class="img-fluid" src="{% static 'img/blog/feature-img1.jpg' %}" alt="">
+													<img class="img-fluid" src="{{posts.image.url}}" alt="">
 												</div>									
 											</div>
 											<div class="col-lg-3  col-md-3 meta-details">
 												<ul class="tags">
-													<li><a href="#">Food,</a></li>
-													<li><a href="#">Technology,</a></li>
-													<li><a href="#">Politics,</a></li>
-													<li><a href="#">Lifestyle</a></li>
+													{% for cat in posts.category.all %}
+													<li><a href="#">{{cat.name}}</a></li>
+													{% endfor %}
 												</ul>
 												<div class="user-details row">
 													<p class="user-name col-lg-12 col-md-12 col-6"><a href="#">Mark wiens</a> <span class="lnr lnr-user"></span></p>
@@ -57,28 +56,44 @@
 										<div class="navigation-area">
 											<div class="row">
 												<div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+													{% if prvPost %}
 													<div class="thumb">
 														<a href="#"><img class="img-fluid" src="{% static 'img/blog/prev.jpg' %}" alt=""></a>
 													</div>
 													<div class="arrow">
 														<a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
 													</div>
+													{% else %}
+														<div class="thumb"></div>
+														<div class="arrow"></div>
+													{%endif%}
+
 													<div class="detials">
-														<p>Prev Post</p>
-														<a href="#"><h4>Space The Final Frontier</h4></a>
+														{% if prvPost %}
+															<p>Prev Post</p>
+															<a href="{% url 'blog:single' pid=prvPost.pk %}"><h4>{{prvPost.title}}</h4></a>
+														{% endif %}
 													</div>
 												</div>
 												<div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
 													<div class="detials">
+														{% if nxtPost %}
 														<p>Next Post</p>
-														<a href="#"><h4>Telescopes 101</h4></a>
+														<a href="{% url 'blog:single' pid=nxtPost.pk %}"><h4>{{nxtPost.title}}</h4></a>
+														{% else%}
+														{% endif %}
 													</div>
+													{% if nxtPost %}
 													<div class="arrow">
 														<a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
 													</div>
 													<div class="thumb">
 														<a href="#"><img class="img-fluid" src="{% static 'img/blog/next.jpg' %}" alt=""></a>
-													</div>										
+													</div>
+													{% else %}
+														<div class="arrow"></div>
+														<div class="thumb"></div>
+													{% endif %}
 												</div>									
 											</div>
 										</div>

@@ -10,8 +10,10 @@ def blog_view(request):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    posts = get_object_or_404(post, pk=pid)
+    posts = get_object_or_404(post, pk=pid, status=1)
     posts.countedViews += 1
     posts.save()
-    context = {'posts':posts}
+    nxtPost = post.objects.filter(pk__gt=pid, status=1).order_by('pk').first()
+    prvPost = post.objects.filter(pk__lt=pid, status=1).order_by('-pk').first()
+    context = {'posts':posts, 'prvPost': prvPost, 'nxtPost': nxtPost}
     return render(request, 'blog/blog-single.html', context)
