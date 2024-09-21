@@ -26,6 +26,6 @@ class post(models.Model):
         verbose_name = "blog post"
     def __str__(self):
         return self.title
-       
+
     
     
