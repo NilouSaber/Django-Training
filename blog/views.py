@@ -3,8 +3,9 @@ from blog.models import post
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
+current_time = timezone.now()
 def blog_view(request, **kwargs):
-    current_time = timezone.now()
+    
     posts = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
     if kwargs.get('cat_name') != None:
         posts = posts.filter(category__name=kwargs['cat_name'])
@@ -27,7 +28,9 @@ def blog_view(request, **kwargs):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    posts = get_object_or_404(post, pk=pid, status=1)
+    
+    postd = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
+    posts = get_object_or_404(postd, pk=pid)
     posts.countedViews += 1
     posts.save()
     nxtPost = post.objects.filter(pk__gt=pid, status=1).order_by('pk').first()
