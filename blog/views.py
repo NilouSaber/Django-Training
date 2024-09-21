@@ -28,8 +28,8 @@ def blog_view(request, **kwargs):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    postd = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
-    posts = get_object_or_404(postd, pk=pid)
+    postfilter = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
+    posts = get_object_or_404(postfilter, pk=pid)
     posts.countedViews += 1
     posts.save()
     nxtPost = post.objects.filter(pk__gt=pid, status=1, publishedDate__lte=current_time).order_by('pk').first()
