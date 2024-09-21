@@ -28,13 +28,12 @@ def blog_view(request, **kwargs):
     return render(request, 'blog/blog-home.html', context)
 
 def blog_single(request, pid):
-    
     postd = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
     posts = get_object_or_404(postd, pk=pid)
     posts.countedViews += 1
     posts.save()
-    nxtPost = post.objects.filter(pk__gt=pid, status=1).order_by('pk').first()
-    prvPost = post.objects.filter(pk__lt=pid, status=1).order_by('-pk').first()
+    nxtPost = post.objects.filter(pk__gt=pid, status=1, publishedDate__lte=current_time).order_by('pk').first()
+    prvPost = post.objects.filter(pk__lt=pid, status=1, publishedDate__lte=current_time).order_by('-pk').first()
     context = {'posts':posts, 'prvPost': prvPost, 'nxtPost': nxtPost}
     return render(request, 'blog/blog-single.html', context)
 
