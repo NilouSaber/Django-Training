@@ -12,6 +12,7 @@ class contact(models.Model):
         ordering = ("createdDate", )
     def __str__(self):
         return self.subject
+
     
 class newsletter(models.Model):
     email = models.EmailField()

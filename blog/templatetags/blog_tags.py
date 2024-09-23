@@ -11,6 +11,7 @@ def function():
 def latestposts(arg=4):
     posts = post.objects.filter(status=1).order_by('publishedDate')[:arg] 
     return {"posts":posts}
+    
 @register.inclusion_tag("blog/blog-category.html")
 def postcategories():
     posts = post.objects.filter(status=1)

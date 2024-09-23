@@ -6,7 +6,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 current_time = timezone.now()
 def blog_view(request, **kwargs):
     
-    posts = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
+    posts = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-pk")
+
     if kwargs.get('cat_name') != None:
         posts = posts.filter(category__name=kwargs['cat_name'])
 

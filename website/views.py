@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from website.forms import contactForm, newsletterForm
 from django.contrib import messages
+from blog.models import post
+from django.utils import timezone
 
+current_time = timezone.now()
 def index_view(request):
     return render(request,'website/index.html')
 
