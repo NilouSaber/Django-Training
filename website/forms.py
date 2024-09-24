@@ -11,8 +11,15 @@ class contactForm(forms.ModelForm):
     class Meta:
         model = contact
         fields = "__all__"
+    def save(self, commit=True):
+        preSave = super(contactForm, self).save(commit=False)
+        preSave.name = "Unknown"
+
+        if commit:
+            preSave.save()
+        return preSave
 
 class newsletterForm(forms.ModelForm):
     class Meta:
-        model = newsletter
+        model = newsletter  
         fields = "__all__"

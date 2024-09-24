@@ -32,7 +32,30 @@
 			<link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
 			<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">				
 		</head>
-		<body>	
+		<body>
+								<!-- Modal -->
+								<div id="myModal" class="modal fade messages" role="dialog">
+									<div class="modal-dialog">
+									<!-- Modal content-->
+									<div class="modal-content">
+										{% if messages %}
+										{% for message in messages %}	
+										<div class="modal-header">												
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">{{ message.tags }}</h4>
+										</div>
+										<div class="modal-body">
+											<p>{{ message }}</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>														
+										</div>
+										{% endfor %}
+										{% endif %}
+									</div>
+									</div>
+								</div>			
+								<!-- End of Modal-->		
 			<header id="header">
 				<div class="header-top">
 					<div class="container">
@@ -84,7 +107,7 @@
 			</header><!-- #header -->
 			{% block content %}
 
-    		{% endblock %}
+    		{% endblock %}		
 			<!-- start footer Area -->		
 			<footer class="footer-area section-gap">
 				<div class="container">
@@ -175,7 +198,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 			<script src="{% static 'js/vendor/jquery-2.2.4.min.js' %}"></script>
 			<script src="{% static 'js/popper.min.js' %}"></script>
-			<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>			
+			<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+			<script>
+				$(document).ready(function(){
+					{% if messages %}
+						$('#myModal').modal('show');
+					{% endif %}
+				}
+				);
+			</script>
 			<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>		
  			<script src="{% static 'js/jquery-ui.js' %}"></script>					
   			<script src="{% static 'js/easing.min.js' %}"></script>			
