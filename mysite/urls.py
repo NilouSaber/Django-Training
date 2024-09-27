@@ -23,7 +23,7 @@ from django.contrib.sitemaps.views import sitemap
 from website.sitemaps import StaticViewSitemap
 from blog.sitemaps import BlogSitemap
 import debug_toolbar
-from blog.feeds import LatestEntriesFeed
+
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -39,7 +39,7 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('summernote/', include('django_summernote.urls')),
     path('captcha', include('captcha.urls')),
-    path('rss/feed', LatestEntriesFeed),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
