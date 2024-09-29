@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "taggit",
     "website",
     "blog",
+    'accounts',
 ]
 #captcha admin setting
 MULTI_CAPTCHA_ADMIN = {
