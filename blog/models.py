@@ -23,6 +23,7 @@ class post(models.Model):
     createdDate = models.DateTimeField(auto_now_add=True)
     updatedTime = models.DateTimeField(auto_now=True)
     publishedDate = models.DateTimeField(null=True)
+    login_require = models.BooleanField(default=False)
     class Meta:
         ordering = ["-createdDate",]
         verbose_name = "blog post"

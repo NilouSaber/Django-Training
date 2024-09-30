@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blog.forms import commentForm
 from django.contrib import messages
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -44,15 +46,17 @@ def blog_single(request, pid):
 
     postfilter = post.objects.filter(publishedDate__lte=current_time, status=1).order_by("-publishedDate")
     posts = get_object_or_404(postfilter, pk=pid)
-    posts.countedViews += 1
-    posts.save()
-    nxtPost = post.objects.filter(pk__gt=pid, status=1, publishedDate__lte=current_time).order_by('pk').first()
-    prvPost = post.objects.filter(pk__lt=pid, status=1, publishedDate__lte=current_time).order_by('-pk').first()
-    comments = Comment.objects.filter(postc=posts.id, approved=True)
-    form = commentForm()
-    context = {'posts':posts, 'prvPost': prvPost, 'nxtPost': nxtPost, "comments":comments, 'form':form}
-    return render(request, 'blog/blog-single.html', context)
-
+    if not post.login_require:
+        posts.countedViews += 1
+        posts.save()
+        nxtPost = post.objects.filter(pk__gt=pid, status=1, publishedDate__lte=current_time).order_by('pk').first()
+        prvPost = post.objects.filter(pk__lt=pid, status=1, publishedDate__lte=current_time).order_by('-pk').first()
+        comments = Comment.objects.filter(postc=posts.id, approved=True)
+        form = commentForm()
+        context = {'posts':posts, 'prvPost': prvPost, 'nxtPost': nxtPost, "comments":comments, 'form':form}
+        return render(request, 'blog/blog-single.html', context)
+    else:
+        return HttpResponseRedirect(reverse('accounts:login'))
 
 def blog_search(request):
     current_time = timezone.now()
