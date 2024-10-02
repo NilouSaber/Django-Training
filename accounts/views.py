@@ -8,9 +8,8 @@ from django.urls import reverse
 def login_view(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = CustomAuthenticationForm(request=request,data=request.POST)
+            form = CustomAuthenticationForm(request=request, data=request.POST)
             if form.is_valid():
-
                 username_or_email = form.cleaned_data.get('username')
                 password = form.cleaned_data.get('password')
                 user = authenticate(request, username=username_or_email, password=password)
@@ -21,14 +20,14 @@ def login_view(request):
                     except UserModel.DoesNotExist:
                         user = None
                 if user is not None:
-                    login(request,user)
+                    login(request, user)
                     return redirect('/')
             else:
-                form.add_error(None, 'Error in Login or Captcha')
-                
-        form = CustomAuthenticationForm()
-        context = {'form':form}
-        return render(request,'accounts/login.html',context)
+                form.add_error(None, 'Error in Login')
+        else:
+            form = CustomAuthenticationForm()
+        context = {'form': form}
+        return render(request, 'accounts/login.html', context)
     else:
         return redirect('/')
 

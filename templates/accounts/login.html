@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>Login</title>
 </head>
@@ -21,33 +20,47 @@
                         <form method="post" action="{% url 'accounts:login' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input name="username" type="text" class="form-control" id="username" placeholder="Username">
-                                {% for error in form.username.errors %}
-                                <div class="error">{{error}}</div>
-                                {% endfor %}
+                                <input name="username" type="text" class="form-control" id="username" placeholder="Username or Email">
+                                {% if form.username.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.username.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
                                 <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                                {% for error in form.password.errors %}
-                                <div class="error">{{error}}</div>
-                                {% endfor %}
+                                {% if form.password.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.password.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="mb-3">
-                                {{form.captcha}}
-                                {% for error in form.captcha.errors %}
-                                    <div class="error">{{error}}</div>
-                                {% endfor %}
+                                {{ form.captcha }}
+                                {% if form.captcha.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.captcha.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
-                            {% for error in form.non_field_errors %}
-                                <div class="error">{{error}}</div>
-                            {% endfor %}
+                            {% if form.non_field_errors %}
+                                <div class="text-danger">
+                                    {% for error in form.non_field_errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </form>
                     </div>
                     <div class="card-footer text-center">
