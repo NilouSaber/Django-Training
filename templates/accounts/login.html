@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Login</title>
 </head>
 <body>
     <div class="container">
@@ -17,28 +21,44 @@
                         <form method="post" action="{% url 'accounts:login' %}">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="email" class="form-label">Username</label>
-                                <input name="username" type="text" class="form-control" id="email" placeholder="enter Username">
+                                <label for="username" class="form-label">Username</label>
+                                <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+                                {% for error in form.username.errors %}
+                                <div class="error">{{error}}</div>
+                                {% endfor %}
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                                {% for error in form.password.errors %}
+                                <div class="error">{{error}}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="mb-3">
+                                {{form.captcha}}
+                                {% for error in form.captcha.errors %}
+                                    <div class="error">{{error}}</div>
+                                {% endfor %}
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="rememberMe">
                                 <label class="form-check-label" for="rememberMe">Remember me</label>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
+                            {% for error in form.non_field_errors %}
+                                <div class="error">{{error}}</div>
+                            {% endfor %}
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <small class="text-muted">Don't have an account? <a href="#">Sign up</a></small>
+                        <small class="text-muted">
+                            Don't have an account? <a href="{% url 'accounts:signup' %}">Sign up</a> or <a href="{% url 'reset_password' %}">Forget password</a>
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 </body>
 </html>

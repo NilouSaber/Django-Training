@@ -87,6 +87,10 @@ SUMMERNOTE_CONFIG = {
         ],
     }
 }
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.UsernameOrEmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 MIDDLEWARE = [
@@ -175,3 +179,10 @@ INTERNAL_IPS = [
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mirastellings@gmail.com'
+EMAIL_HOST_PASSWORD = 'uaofjzniksgvqlre'
