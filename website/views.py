@@ -4,6 +4,7 @@ from website.forms import contactForm, newsletterForm
 from django.contrib import messages
 from blog.models import post
 from django.utils import timezone
+from .decorators import under_construction_only
 
 current_time = timezone.now()
 def index_view(request):
@@ -33,4 +34,8 @@ def newsletter_view(request):
             return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/')
-    
+
+# to disable it, just put UNDER_CONSTRUCTION = False in the settings.py
+@under_construction_only
+def under_construction(request):
+    return render(request, 'under_construction.html')
