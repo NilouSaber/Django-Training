@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_summernote",
     'django.contrib.humanize',
+    "compressor",
     "captcha",
     "robots",
     "taggit",
@@ -105,7 +106,7 @@ MIDDLEWARE = [
     'website.middleware.UnderConstructionMiddleware',
 ]
 
-UNDER_CONSTRUCTION = True
+UNDER_CONSTRUCTION = False
 ROOT_URLCONF = "mysite.urls"
 
 TEMPLATES = [
@@ -188,3 +189,12 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mirastellings@gmail.com'
 EMAIL_HOST_PASSWORD = 'uaofjzniksgvqlre'
+
+
+COMPRESS_ENABLED = True
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
